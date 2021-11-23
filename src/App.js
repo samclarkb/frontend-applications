@@ -7,7 +7,7 @@ import dataOphalen from './fetch.js'
 function App() {
 	const [json, setJson] = useState(null)
 	useEffect(() => {
-		dataOphalen().then(data => setJson)
+		dataOphalen().then(data => setJson(data))
 	})
 
 	return (
