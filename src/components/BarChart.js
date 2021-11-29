@@ -1,23 +1,15 @@
 import useD3 from '../hooks/useD3'
 import React, { useEffect, useState } from 'react'
 import * as d3 from 'd3'
-// import data from './fecth.js'
 
 function BarChart({ data, selectedChart }) {
 	const [initialised, setInitialised] = useState(false)
 	// De afmetingen van de gehele svg
-	const margin = { top: 40, bottom: 10, left: 120, right: 20 }
+	const margin = { top: 40, bottom: 10, left: 120, right: 60 }
 	const width = 1200 - margin.left - margin.right
-	const height = 600 - margin.top - margin.bottom
+	const height = 550 - margin.top - margin.bottom
 	const ref = useD3(
 		svg => {
-			// Aanmaken en het stijlen van de SVG
-			// svg = d3
-			// .select(svg) // body wordt geselcteerd
-			// // .append('svg') // SVG wordty aangemaakt
-			// .attr('width', width + margin.left + margin.right)
-			// .attr('height', height + margin.top + margin.bottom)
-
 			const xscale = d3.scaleLinear().range([0, width]) // scaleLinear om de gaten tussen de data even groot te houden
 			const yscale = d3.scaleBand().rangeRound([0, height]).paddingInner(0.15) // padding tussen de rectangles
 
@@ -155,41 +147,6 @@ function BarChart({ data, selectedChart }) {
 			}
 
 			update(data, selectedChart)
-
-			// const update = (data, type) => {
-			// 	sorteren(data, type) // Hier roep ik de sorteren functie aan
-			// 	assenUpdate(data, type) // Hier roep ik de functie aan die ervoor zorgt dat X en de Y as worden geupdatet
-			// 	vierkant(type) // Deze functie zorgt ervoor dat de data wordt vertuurd naar de rectangle
-
-			// 	// Het renderen van de X en Y as. Ook geef ik hier een transitie van één seconde mee
-			// 	g_xaxis.transition().duration(1000).ease(d3.easePoly).call(xaxis)
-			// 	g_yaxis.transition().duration(1000).ease(d3.easePoly).call(yaxis)
-			// }
-
-			// update(data, selectedChart)
-
-			// Hiermee zet ik de default op playcount
-
-			// Met deze functie leg ik de verbinding tussen de radio buttons en de data uit de externe API
-			// d3.selectAll('#filter').on('change', i => {
-			// 	const target = i.target
-			// 	const checked = d3.select(target).property('checked')
-			// 	if (checked === true) {
-			// 		if (d3.select(target).node().value === 'playcount') {
-			// 			// Er wordt hier gerefereert naar de value van de radio buttons
-			// 			sel = 'playcount'
-			// 			update(data, 'playcount')
-			// 		}
-			// 		if (d3.select(target).node().value === 'listeners') {
-			// 			selectedChart = 'listeners'
-			// 			update(data, 'listeners')
-			// 		}
-			// 		if (d3.select(target).node().value === 'average') {
-			// 			selectedChart = 'average'
-			// 			update(data, 'average')
-			// 		}
-			// 	}
-			// })
 		},
 		[data.length, selectedChart]
 	)
@@ -201,8 +158,8 @@ function BarChart({ data, selectedChart }) {
 		<svg
 			ref={ref}
 			style={{
-				height: 600,
-				width: '100%',
+				height: 550,
+				width: 1200,
 				marginRight: '0px',
 				marginLeft: '0px',
 			}}

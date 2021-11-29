@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+body {
+	width: 100%;
+	/* margin-left: 1em; */
+	font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+	color: white;
+	font-weight: bold;
+	background-color: lightblue;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+	color: white;
+	font-size: 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+rect {
+	fill: white;
+	fill-opacity: 1;
+	cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.axis {
+	font-size: smaller;
 }
 
-.App-link {
-  color: #61dafb;
+/* Stijling van de pop up waarin de data te zien is (hover state) */
+#tooltip {
+	position: absolute;
+	width: 200px;
+	height: auto;
+	padding: 10px;
+	font-weight: normal;
+	background-color: rgb(147, 224, 179);
+	-webkit-border-raadius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+	align-items: center;
+	text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#tooltip.hidden {
+	display: none;
+}
+
+#tooltip p {
+	margin: 0;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 20px;
+	color: white;
+}
+
+.highlight {
+	opacity: 0.7;
+}
+
+input[type='radio'] {
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.radio label {
+	padding-right: 10px;
+}
+
+.filterEnTitel {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 2em;
+}
+
+.barchart {
+	text-align: center;
 }

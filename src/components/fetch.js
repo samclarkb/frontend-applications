@@ -13,7 +13,6 @@ function dataOphalen() {
 					data.average = Math.round(data.average)
 					return data
 				})
-
 				resolve(artists)
 			})
 			.catch(err => {
