@@ -1,19 +1,18 @@
 body {
 	width: 100%;
-	/* margin-left: 1em; */
 	font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-	color: white;
+	color: #647e66;
 	font-weight: bold;
-	background-color: lightblue;
+	background-color: #eadad7;
 }
 
 h1 {
-	color: white;
+	color: #647e66;
 	font-size: 30px;
 }
 
 rect {
-	fill: white;
+	/* fill: white; */
 	fill-opacity: 1;
 	cursor: pointer;
 }
@@ -29,7 +28,7 @@ rect {
 	height: auto;
 	padding: 10px;
 	font-weight: normal;
-	background-color: rgb(147, 224, 179);
+	background-color: #647e66;
 	-webkit-border-raadius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -55,6 +54,7 @@ rect {
 
 .highlight {
 	opacity: 0.7;
+	cursor: pointer;
 }
 
 input[type='radio'] {
@@ -72,6 +72,7 @@ input[type='radio'] {
 	margin-bottom: 2em;
 }
 
-.barchart {
-	text-align: center;
+.stijl {
+	display: flex;
+	font-size: 13px;
 }

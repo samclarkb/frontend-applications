@@ -5,9 +5,9 @@ import * as d3 from 'd3'
 function BarChart({ data, selectedChart }) {
 	const [initialised, setInitialised] = useState(false)
 	// De afmetingen van de gehele svg
-	const margin = { top: 40, bottom: 10, left: 120, right: 60 }
-	const width = 1200 - margin.left - margin.right
-	const height = 550 - margin.top - margin.bottom
+	const margin = { top: 40, bottom: 10, left: 120, right: 0 }
+	const width = 900 - margin.left - margin.right
+	const height = 500 - margin.top - margin.bottom
 	const ref = useD3(
 		svg => {
 			const xscale = d3.scaleLinear().range([0, width]) // scaleLinear om de gaten tussen de data even groot te houden
@@ -66,12 +66,33 @@ function BarChart({ data, selectedChart }) {
 			}
 
 			const vierkant = type => {
+				const color = d3
+					.scaleOrdinal()
+					.domain(data.length.toString()) // domain of given data
+					.range([
+						'#E0C8C3',
+						'#E5D1CD',
+						'#6B8E6E',
+						'#759D78',
+						'#82AC85',
+						'#A9C7AC',
+						'#BFD8C4',
+						'#D1ACA5',
+						'#D6B6AF',
+						'#DBBFB9',
+					])
+
 				const rect = svg
 					.select('.chart')
 					.selectAll('rect')
 					.data(data, d => d.name)
 					.join(enter => {
-						const rect_enter = enter.append('rect').attr('x', 0)
+						const rect_enter = enter
+							.append('rect')
+							.attr('x', 0)
+							.attr('fill', d => {
+								return color(d)
+							}) // fill the rect
 						rect_enter.append('title')
 						return rect_enter
 					})
@@ -158,8 +179,8 @@ function BarChart({ data, selectedChart }) {
 		<svg
 			ref={ref}
 			style={{
-				height: 550,
-				width: 1200,
+				height: 500,
+				width: 900,
 				marginRight: '0px',
 				marginLeft: '0px',
 			}}

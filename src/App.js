@@ -17,7 +17,7 @@ function App() {
 	return (
 		<div className="App">
 			<div className="filterEnTitel">
-				<h1>Artiesten Bar chart</h1>
+				<h1>Artiesten Statistieken</h1>
 				<div className="hidden" id="tooltip">
 					<p id="name"></p>
 					<p id="value"></p>
@@ -60,12 +60,16 @@ function App() {
 				</div>
 			</div>
 
-			{/* <pre>{JSON.stringify(json, null, 3)}</pre> */}
-			<div className="barchart">
-				{json ? <BarChart selectedChart={selectedChart} data={json} /> : undefined}
+			<div className="stijl">
+				<div className="barchart">
+					{json ? <BarChart selectedChart={selectedChart} data={json} /> : undefined}
+				</div>
+				<div className="hidden" id="tooltip">
+					<p id="name"></p>
+					<p id="value"></p>
+				</div>
+				{json ? <PieChart selectedChart={selectedChart} data={json} /> : undefined}
 			</div>
-
-			{json ? <PieChart data={json} /> : undefined}
 		</div>
 	)
 }
