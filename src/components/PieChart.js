@@ -1,6 +1,7 @@
 // import React, { useEffect } from 'react'
 import useD3 from '../hooks/useD3'
 import * as d3 from 'd3'
+import { selectAll } from 'd3'
 
 const PieChart = ({ data, selectedChart }) => {
 	const dimensions = {
@@ -38,149 +39,47 @@ const PieChart = ({ data, selectedChart }) => {
 
 			const arcs = g.selectAll('.arc')
 
-			// pie.transition().duration(1000)
+			arcs.data(pie.value(d => d[selectedChart])(data))
+				// .data(pie(data.map(d => d.name)))
+				.enter()
+				.append('path')
+				.attr('class', 'arc')
+				.attr('fill', function (d) {
+					return color(d)
+				})
+				.attr('d', arc)
 
-			if (selectedChart === 'playcount') {
-				arcs.data(pie.value(d => d.playcount)(data))
-					// .data(pie(data.map(d => d.name)))
-					.enter()
-					.append('path')
-					.attr('class', 'arc')
-					.attr('fill', function (d, i) {
-						return color(i)
-					})
-					.attr('d', arc)
-			} else if (selectedChart === 'listeners') {
-				arcs.data(pie.value(d => d.listeners)(data))
-					// .data(pie(data.map(d => d.name)))
-					.enter()
-					.append('path')
-					.attr('class', 'arc')
-					.attr('fill', function (d, i) {
-						return color(i)
-					})
-					.attr('d', arc)
-			} else if (selectedChart === 'average') {
-				arcs.data(pie.value(d => d.average)(data))
-					// .data(pie(data.map(d => d.name)))
-					.enter()
-					.append('path')
-					.attr('class', 'arc')
-					.attr('fill', function (d, i) {
-						return color(i)
-					})
-					.attr('d', arc)
-			} else {
-				arcs.data(pie.value(d => d.playcount)(data))
-					.enter()
-					.append('path')
-					.attr('class', 'arc')
-					.attr('fill', function (i) {
-						return color(i)
-					})
-					.attr('d', arc)
-			}
+			// console.log(data)
 
-			// sheidslijn
-			const arcGenerator = d3.arc().innerRadius(0).outerRadius(radius)
+			// const scores = data.map(d => parseInt(d.playcount))
+			// const totalScores = scores.reduce(
+			// 	(previousScore, currentScore, index) => previousScore + currentScore,
+			// 	0
+			// )
+			// console.log(totalScores) //returns 403
 
-			arcs.data(data)
+			arcs.data(pie.value(d => d[selectedChart])(data))
+				// .data(pie(data.map(d => d.name)))
 				.enter()
 				.append('text')
 				.text(function (d) {
-					return d.name
+					const scores = data.map(d => parseInt(d[selectedChart]))
+					const totalScores = scores.reduce(
+						(previousScore, currentScore, index) => previousScore + currentScore,
+						0
+					)
+
+					return Math.round((d.data[selectedChart] / totalScores) * 100) + '%'
 				})
 				.attr('transform', function (d) {
-					return 'translate(' + arcGenerator.centroid(d) + ')'
+					return 'translate(' + arc.centroid(d) + ')'
 				})
 				.attr('fill', 'white')
 				.attr('text-anchor', 'middle')
-				.style('font-size', 12)
+				.style('font-size', 13)
 				.style('stroke-width', '2px')
 
-			// if (selectedChart === 'playcount') {
-			// 	g.selectAll('.arc')
-			// 		.enter()
-			// 		.append('text')
-			// 		.attr('transform', function (d) {
-			// 			return 'translate(' + g.centroid(d) + ')'
-			// 		})
-			// 		.attr('text-anchor', 'middle')
-			// 		.attr('fill', 'white')
-			// 		.text(function (d) {
-			// 			return data.name + '%'
-			// 		})
-			// } else if (selectedChart === 'listeners') {
-			// 	g.selectAll('.arc')
-			// 		.enter()
-			// 		.append('text')
-			// 		.attr('transform', function (d) {
-			// 			return 'translate(' + arc.centroid(d) + ')'
-			// 		})
-			// 		.attr('text-anchor', 'middle')
-			// 		.attr('fill', 'white')
-			// 		.text(function (d) {
-			// 			return data.name
-			// 		})
-			// } else if (selectedChart === 'average') {
-			// 	g.selectAll('.arc')
-			// 		.enter()
-			// 		.append('text')
-			// 		.attr('transform', function (d) {
-			// 			return 'translate(' + arc.centroid(d) + ')'
-			// 		})
-			// 		.attr('text-anchor', 'middle')
-			// 		.attr('fill', 'white')
-			// 		.text(function (d) {
-			// 			return data.name
-			// 		})
-			// } else {
-			// 	g.selectAll('.arc')
-			// 		.enter()
-			// 		.append('text')
-			// 		.attr('transform', function (d) {
-			// 			return 'translate(' + arc.centroid(d) + ')'
-			// 		})
-			// 		.attr('text-anchor', 'middle')
-			// 		.attr('fill', 'white')
-			// 		.text(function (d) {
-			// 			return data.name
-			// 		})
-			// }
-
-			// arcs.append('text')
-			// 	.attr('transform', function (d) {
-			// 		return 'translate(' + arc.centroid(d) + ')'
-			// 	})
-
-			// 	.attr('text-anchor', 'end')
-			// 	.text(function (d) {
-			// 		return d.name
-			// 	})
-
-			// arcs.append('text')
-			// 	.attr('text-anchor', 'middle')
-			// 	.text(d => d.name)
-
-			// var total = d3.sum(
-			//     dataset.map(function (d) {
-			//         // NEW
-			//         return d.count // NEW
-			//     })
-			// ) // NEW
 			// var percent = Math.round((1000 * d.data.count) / total) / 10
-
-			// svg.selectAll('arc')
-			// 	.data(data.map(d => d.name))
-			// 	.join('text')
-			// 	.text(function (d) {
-			// 		return +d.name
-			// 	})
-			// 	.attr('transform', function (d) {
-			// 		return `translate(${arc .centroid(d.name)})`
-			// 	})
-			// 	.style('text-anchor', 'middle')
-			// 	.style('font-size', 17)
 
 			const onMouseMove = (d, data) => {
 				// d.clientX en d.clientY zijn properties in het onMouseOver object die de coördinaten van de muis opspoort

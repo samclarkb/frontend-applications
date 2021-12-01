@@ -104,27 +104,10 @@ function BarChart({ data, selectedChart }) {
 				rect.attr('height', yscale.bandwidth())
 
 				// hier stop ik de data in de rectangles. Ik geef hier ook de transities op mijn rectangles mee
-				if (type === 'playcount') {
-					rect.transition()
-						.duration(1000)
-						.attr('width', d => xscale(d.playcount))
-						.attr('y', d => yscale(d.name))
-				} else if (type === 'listeners') {
-					rect.transition()
-						.duration(1000) // Hiermee zet ik de duur van de transitie van de rectangles op één seconde
-						.attr('width', d => xscale(d.listeners))
-						.attr('y', d => yscale(d.name))
-				} else if (type === 'average') {
-					rect.transition()
-						.duration(1000)
-						.attr('width', d => xscale(d.playcount / d.listeners))
-						.attr('y', d => yscale(d.name))
-				} else {
-					rect.transition()
-						.duration(1000)
-						.attr('width', d => xscale(d.playcount))
-						.attr('y', d => yscale(d.name))
-				}
+				rect.transition()
+					.duration(1000)
+					.attr('width', d => xscale(d[selectedChart]))
+					.attr('y', d => yscale(d.name))
 			}
 
 			// Dit is de functie die ervoor zorgt dat de artiest met de hoogste waarde bovenaan de grafiek staat
@@ -143,17 +126,8 @@ function BarChart({ data, selectedChart }) {
 			}
 
 			// Hier geef ik data mee aan de X en de Y as
-			const assenUpdate = (data, type) => {
-				console.log(xscale)
-				if (type === 'playcount') {
-					xscale.domain([0, d3.max(data, d => +d.playcount)])
-				} else if (type === 'listeners') {
-					xscale.domain([0, d3.max(data, d => +d.listeners)])
-				} else if (type === 'average') {
-					xscale.domain([0, d3.max(data, d => +d.playcount / d.listeners)])
-				} else {
-					xscale.domain([0, d3.max(data, d => +d.playcount)])
-				}
+			const assenUpdate = data => {
+				xscale.domain([0, d3.max(data, d => +d[selectedChart])])
 				yscale.domain(data.map(d => d.name))
 			}
 
