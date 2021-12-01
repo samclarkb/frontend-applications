@@ -1,7 +1,6 @@
 // import React, { useEffect } from 'react'
 import useD3 from '../hooks/useD3'
 import * as d3 from 'd3'
-import { selectAll } from 'd3'
 
 const PieChart = ({ data, selectedChart }) => {
 	const dimensions = {
@@ -15,6 +14,7 @@ const PieChart = ({ data, selectedChart }) => {
 				height = dimensions.height,
 				radius = Math.min(width, height) / 3
 
+			// hiermee sorg ik ervoor dat de pie chart wordt verwijderd wanneer deze wordt geupdatet
 			svg.select('g').remove()
 
 			const g = svg
@@ -22,25 +22,26 @@ const PieChart = ({ data, selectedChart }) => {
 				.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
 			const color = d3.scaleOrdinal([
+				//  kleuren van de piechart
+				'#A9C7AC',
+				'#BFD8C4',
+				'#E5D1CD',
+				'#E0C8C3',
+				'#D6B6AF',
+				'#DBBFB9',
+				'#D1ACA5',
 				'#6B8E6E',
 				'#759D78',
 				'#82AC85',
-				'#A9C7AC',
-				'#BFD8C4',
-				'#D1ACA5',
-				'#D6B6AF',
-				'#DBBFB9',
-				'#E0C8C3',
-				'#E5D1CD',
 			])
+			console.log(data)
 
 			const pie = d3.pie()
 			const arc = d3.arc().innerRadius(125).outerRadius(200).padAngle(0.02)
-
 			const arcs = g.selectAll('.arc')
 
+			// stopt de data in de pie chart
 			arcs.data(pie.value(d => d[selectedChart])(data))
-				// .data(pie(data.map(d => d.name)))
 				.enter()
 				.append('path')
 				.attr('class', 'arc')
@@ -49,37 +50,25 @@ const PieChart = ({ data, selectedChart }) => {
 				})
 				.attr('d', arc)
 
-			// console.log(data)
-
-			// const scores = data.map(d => parseInt(d.playcount))
-			// const totalScores = scores.reduce(
-			// 	(previousScore, currentScore, index) => previousScore + currentScore,
-			// 	0
-			// )
-			// console.log(totalScores) //returns 403
-
+			// text aan de pie chart toevoegen
 			arcs.data(pie.value(d => d[selectedChart])(data))
-				// .data(pie(data.map(d => d.name)))
 				.enter()
 				.append('text')
 				.text(function (d) {
-					const scores = data.map(d => parseInt(d[selectedChart]))
+					const scores = data.map(d => parseInt(d[selectedChart])) // parseInt zorgt ervoor dat ik van een sring een number maakt
 					const totalScores = scores.reduce(
-						(previousScore, currentScore, index) => previousScore + currentScore,
+						(previousScore, currentScore) => previousScore + currentScore, // berekent het totaal, zodat ik het percentage kan uitrekenen
 						0
 					)
 
-					return Math.round((d.data[selectedChart] / totalScores) * 100) + '%'
+					return Math.round((d.data[selectedChart] / totalScores) * 100) + '%' // berekent het percentage
 				})
 				.attr('transform', function (d) {
 					return 'translate(' + arc.centroid(d) + ')'
 				})
 				.attr('fill', 'white')
-				.attr('text-anchor', 'middle')
+				.attr('text-anchor', 'middle') // positionering van de tekst
 				.style('font-size', 13)
-				.style('stroke-width', '2px')
-
-			// var percent = Math.round((1000 * d.data.count) / total) / 10
 
 			const onMouseMove = (d, data) => {
 				// d.clientX en d.clientY zijn properties in het onMouseOver object die de coördinaten van de muis opspoort
@@ -122,7 +111,7 @@ const PieChart = ({ data, selectedChart }) => {
 				.on('mousemove', onMouseMove) // Mousemove returnt constant de coördinaten van de muis
 				.on('mouseout', onMouseOut)
 		},
-		[data.length, selectedChart]
+		[data, selectedChart]
 	)
 
 	return (
@@ -132,7 +121,6 @@ const PieChart = ({ data, selectedChart }) => {
 				height: dimensions.height,
 				width: dimensions.width,
 			}}
-			// dangerouslySetInnerHTML={{ __html: '' }} // alles binnen de svg wordt genegeerd door React
 		></svg>
 	)
 }

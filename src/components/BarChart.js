@@ -65,22 +65,20 @@ function BarChart({ data, selectedChart }) {
 				d3.select('#tooltip').classed('hidden', true) // Hidden refereert naar een CSS class die de pop up op display none zet
 			}
 
-			const vierkant = type => {
-				const color = d3
-					.scaleOrdinal()
-					.domain(data.length.toString()) // domain of given data
-					.range([
-						'#E0C8C3',
-						'#E5D1CD',
-						'#6B8E6E',
-						'#759D78',
-						'#82AC85',
-						'#A9C7AC',
-						'#BFD8C4',
-						'#D1ACA5',
-						'#D6B6AF',
-						'#DBBFB9',
-					])
+			const vierkant = () => {
+				const color = d3.scaleOrdinal([
+					// kleuren van de virkanten
+					'#6B8E6E',
+					'#759D78',
+					'#82AC85',
+					'#A9C7AC',
+					'#BFD8C4',
+					'#D1ACA5',
+					'#D6B6AF',
+					'#DBBFB9',
+					'#E0C8C3',
+					'#E5D1CD',
+				])
 
 				const rect = svg
 					.select('.chart')
@@ -111,17 +109,9 @@ function BarChart({ data, selectedChart }) {
 			}
 
 			// Dit is de functie die ervoor zorgt dat de artiest met de hoogste waarde bovenaan de grafiek staat
-			const sorteren = (data, type) => {
+			const sorteren = data => {
 				data.sort((a, b) => {
-					if (type === 'playcount') {
-						return b.playcount - a.playcount // b - a omdat ik hoogste waarde bovenaan wil zetten. Als ik de laagste waarde bovenaan wil zetten wordt het a - b
-					} else if (type === 'listeners') {
-						return b.listeners - a.listeners
-					} else if (type === 'average') {
-						return b.playcount / b.listeners - a.playcount / a.listeners
-					} else {
-						return b.playcount - a.playcount
-					}
+					return b[selectedChart] - a[selectedChart] // b - a omdat ik hoogste waarde bovenaan wil zetten. Als ik de laagste waarde bovenaan wil zetten wordt het a - b
 				})
 			}
 

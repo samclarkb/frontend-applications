@@ -1,13 +1,13 @@
 body {
 	width: 100%;
 	font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-	color: #647e66;
+	color: #6b8e6e;
 	font-weight: bold;
-	background-color: #eadad7;
+	background-color: white;
 }
 
 h1 {
-	color: #647e66;
+	color: #6b8e6e;
 	font-size: 30px;
 }
 
@@ -28,7 +28,7 @@ rect {
 	height: auto;
 	padding: 10px;
 	font-weight: normal;
-	background-color: #647e66;
+	background-color: #6b8e6e;
 	-webkit-border-raadius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
