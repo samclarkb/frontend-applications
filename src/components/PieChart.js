@@ -64,7 +64,7 @@ const PieChart = ({ data, geselecteerdeWaarde }) => {
 				d3.select('#tooltip2') // hier geef ik aan dat de pop up op de coördinaten van de muis moet worden weergegeven
 					.style('left', xPositie - 105 + 'px')
 					.style('top', yPositie + 'px')
-				d3.select('#name2').text(`${data.data.name}`)
+				d3.select('#naam2').text(`${data.data.name} `)
 			}
 
 			// Deze functie zorgt ervoor dat de pop up wordt verwijderd wanneer de mui zich niet meer op de rectangle bevindt
