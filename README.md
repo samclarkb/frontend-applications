@@ -25,9 +25,8 @@ During the past assignment I made a data visualisation using D3.js. I've made a 
 
 ## :memo: Wishlist
 There are a few things I didn't get done due to lack of time:
-* Putting indiviual functions in modules
-* Diving deeper into switch statement within Javascript
-* experimenting with another kind of data visualisation. For instance: Scatter plot, map etc.
+* Diving deeper into REACT 
+* Routing with REACT
 
 ## :wrench: Installation
 If you want to use this code, you can clone my repository with the following command:
@@ -35,7 +34,11 @@ If you want to use this code, you can clone my repository with the following com
 `git clone https://github.com/samclarkb/Frontend-Data`
 
 ## :mag_right: Recources 
--  
+-  Traversy Media. (2021, 18 januari). React JS Crash Course 2021 [Video]. YouTube. https://www.youtube.com/watch?v=w7ejDZ8SWv8
+-  Web Dev Simplified. (2020, 5 mei). Learn useState In 15 Minutes - React Hooks Explained [Video]. YouTube. https://www.youtube.com/watch?v=O6P86uwfdR0
+-  Web Dev Simplified. (2020b, mei 9). Learn useEffect In 13 Minutes [Video]. YouTube. https://www.youtube.com/watch?v=0ZJgIjIuY7U
+-  Stackoverflow. (z.d.). Stackoverflow. Stackoverflow.com. Geraadpleegd op 2 december 2021, van https://stackoverflow.com/
+-  Facebook. (z.d.). Getting Started. Reactjs.org. Geraadpleegd op 2 december 2021, van https://reactjs.org/docs/getting-started.html
 
 ## :bookmark: License 
 Copyright (c) 2021 Sam Clark Boot, [MIT](https://github.com/samclarkb/frontend-applications/blob/main/LICENSE)
