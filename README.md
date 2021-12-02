@@ -33,6 +33,12 @@ If you want to use this code, you can clone my repository with the following com
 
 `git clone https://github.com/samclarkb/Frontend-Data`
 
+Then install al the dependancies
+`npm install`
+
+After that you can run the project with the foolowing command:
+`npm start`
+
 ## :mag_right: Recources 
 -  Traversy Media. (2021, 18 januari). React JS Crash Course 2021 [Video]. YouTube. https://www.youtube.com/watch?v=w7ejDZ8SWv8
 -  Web Dev Simplified. (2020, 5 mei). Learn useState In 15 Minutes - React Hooks Explained [Video]. YouTube. https://www.youtube.com/watch?v=O6P86uwfdR0
