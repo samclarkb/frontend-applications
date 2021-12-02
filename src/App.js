@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import dataOphalen from './components/fetch.js'
 import BarChart from './components/BarChart.js'
 import PieChart from './components/PieChart.js'
-const COLORS = [
+const KLEUREN = [
 	'#6B8E6E',
 	'#759D78',
 	'#82AC85',
@@ -18,16 +18,16 @@ const COLORS = [
 
 function App() {
 	const [json, setJson] = useState(null)
-	const [selectedChart, setselectedChart] = useState('playcount')
-	const onRadioButtonChange = e => {
-		setselectedChart(e.currentTarget.value)
+	const [geselecteerdeWaarde, setgeselecteerdeWaarde] = useState('playcount')
+	const radioButtonVerandering = e => {
+		setgeselecteerdeWaarde(e.currentTarget.value)
 	}
 	useEffect(() => {
 		dataOphalen().then(data =>
 			setJson(
 				data
 					.sort((a, b) => b.playcount - a.playcount)
-					.map((d, i) => ({ ...d, color: COLORS[i % COLORS.length] }))
+					.map((d, i) => ({ ...d, kleur: KLEUREN[i % KLEUREN.length] }))
 			)
 		)
 	}, [])
@@ -37,8 +37,8 @@ function App() {
 			<div className="filterEnTitel">
 				<h1>Artiesten Statistieken</h1>
 				<div className="hidden" id="tooltip">
-					<p id="name"></p>
-					<p id="value"></p>
+					<p id="naam"></p>
+					<p id="waarde"></p>
 				</div>
 				<div className="radio">
 					<label>
@@ -48,8 +48,8 @@ function App() {
 							name="chart"
 							value="playcount"
 							id="filter"
-							checked={selectedChart == 'playcount'}
-							onChange={onRadioButtonChange}
+							checked={geselecteerdeWaarde == 'playcount'}
+							onChange={radioButtonVerandering}
 						/>
 						Totaal Aantal Streams
 					</label>
@@ -59,8 +59,8 @@ function App() {
 							name="chart"
 							value="listeners"
 							id="filter"
-							checked={selectedChart == 'listeners'}
-							onChange={onRadioButtonChange}
+							checked={geselecteerdeWaarde == 'listeners'}
+							onChange={radioButtonVerandering}
 						/>
 						Totaal Aantal Luisteraars
 					</label>
@@ -70,8 +70,8 @@ function App() {
 							name="chart"
 							value="average"
 							id="filter"
-							checked={selectedChart == 'average'}
-							onChange={onRadioButtonChange}
+							checked={geselecteerdeWaarde == 'average'}
+							onChange={radioButtonVerandering}
 						/>
 						Gemiddeld Aantal Streams Per Luisteraar
 					</label>
@@ -80,13 +80,17 @@ function App() {
 
 			<div className="stijl">
 				<div className="barchart">
-					{json ? <BarChart selectedChart={selectedChart} data={json} /> : undefined}
+					{json ? (
+						<BarChart geselecteerdeWaarde={geselecteerdeWaarde} data={json} />
+					) : undefined}
 				</div>
 				<div className="hidden2" id="tooltip2">
-					<p id="name2"></p>
-					<p id="value2"></p>
+					<p id="naam2"></p>
+					<p id="waarde2"></p>
 				</div>
-				{json ? <PieChart selectedChart={selectedChart} data={json} /> : undefined}
+				{json ? (
+					<PieChart geselecteerdeWaarde={geselecteerdeWaarde} data={json} />
+				) : undefined}
 			</div>
 		</div>
 	)
