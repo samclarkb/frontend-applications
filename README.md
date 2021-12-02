@@ -27,6 +27,7 @@ During the past assignment I made a data visualisation using D3.js. I've made a 
 There are a few things I didn't get done due to lack of time:
 * Diving deeper into REACT 
 * Routing with REACT
+* Add a transition to the pie chart
 
 ## :wrench: Installation
 If you want to use this code, you can clone my repository with the following command:
