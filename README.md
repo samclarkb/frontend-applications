@@ -34,9 +34,11 @@ If you want to use this code, you can clone my repository with the following com
 `git clone https://github.com/samclarkb/Frontend-Data`
 
 Then install al the dependancies
+
 `npm install`
 
 After that you can run the project with the foolowing command:
+
 `npm start`
 
 ## :mag_right: Recources 
