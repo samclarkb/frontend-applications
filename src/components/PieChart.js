@@ -21,19 +21,19 @@ const PieChart = ({ data, selectedChart }) => {
 				.append('g')
 				.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
-			const color = d3.scaleOrdinal([
-				//  kleuren van de piechart
-				'#A9C7AC',
-				'#BFD8C4',
-				'#E5D1CD',
-				'#E0C8C3',
-				'#D6B6AF',
-				'#DBBFB9',
-				'#D1ACA5',
-				'#6B8E6E',
-				'#759D78',
-				'#82AC85',
-			])
+			// const color = d3.scaleOrdinal([
+			// 	//  kleuren van de piechart
+			// 	'#6B8E6E',
+			// 	'#759D78',
+			// 	'#82AC85',
+			// 	'#A9C7AC',
+			// 	'#BFD8C4',
+			// 	'#D1ACA5',
+			// 	'#D6B6AF',
+			// 	'#DBBFB9',
+			// 	'#E0C8C3',
+			// 	'#E5D1CD',
+			// ])
 			console.log(data)
 
 			const pie = d3.pie()
@@ -46,7 +46,8 @@ const PieChart = ({ data, selectedChart }) => {
 				.append('path')
 				.attr('class', 'arc')
 				.attr('fill', function (d) {
-					return color(d)
+					console.log(d.data[selectedChart])
+					return d.data.color
 				})
 				.attr('d', arc)
 
@@ -60,7 +61,6 @@ const PieChart = ({ data, selectedChart }) => {
 						(previousScore, currentScore) => previousScore + currentScore, // berekent het totaal, zodat ik het percentage kan uitrekenen
 						0
 					)
-
 					return Math.round((d.data[selectedChart] / totalScores) * 100) + '%' // berekent het percentage
 				})
 				.attr('transform', function (d) {
@@ -74,35 +74,19 @@ const PieChart = ({ data, selectedChart }) => {
 				// d.clientX en d.clientY zijn properties in het onMouseOver object die de coördinaten van de muis opspoort
 				const xPosition = d.clientX
 				const yPosition = d.clientY
-				let toolTipValue
-
-				toolTipValue = data.data[selectedChart]
 
 				d3.select(d.target).attr('class', 'highlight') // highlight refereert naar een class in de CSS die de opacity op 0,7 zet
-				d3.select('#tooltip').classed('hidden', false) // ik zet de CSS class hidden op false, zodat de pop te voorschijn komt
-				d3.select('#tooltip') // hier geef ik aan dat de pop up op de coördinaten van de muis moet worden weergegeven
-					.style('left', xPosition + 'px')
+				d3.select('#tooltip2').classed('hidden2', false) // ik zet de CSS class hidden op false, zodat de pop te voorschijn komt
+				d3.select('#tooltip2') // hier geef ik aan dat de pop up op de coördinaten van de muis moet worden weergegeven
+					.style('left', xPosition - 105 + 'px')
 					.style('top', yPosition + 'px')
-				d3.select('#name').text(`${data.data.name} heeft `)
-
-				// Ik gebruik hier een if else statement, omdat ik voor iedere filter een andere text wil laten zien
-				if (selectedChart === 'playcount') {
-					d3.select('#value').text(`${toolTipValue} totaal aantal streams `)
-				}
-				if (selectedChart === 'listeners') {
-					d3.select('#value').text(`${toolTipValue} aantal verschillende luisteraars `)
-				}
-				if (selectedChart === 'average') {
-					d3.select('#value').text(
-						`${Math.round(toolTipValue)} streams gemiddeld per luisteraar`
-					) // Ik gebruik hier Math.round omdat ik het getal van deze uitkomst wil afronden
-				}
+				d3.select('#name2').text(`${data.data.name}`)
 			}
 
 			// Deze functie zorgt ervoor dat de pop up wordt verwijderd wanneer de mui zich niet meer op de rectangle bevindt
 			const onMouseOut = d => {
 				d3.select(d.target).attr('class', 'bar')
-				d3.select('#tooltip').classed('hidden', true) // Hidden refereert naar een CSS class die de pop up op display none zet
+				d3.select('#tooltip2').classed('hidden2', true) // Hidden refereert naar een CSS class die de pop up op display none zet
 			}
 
 			// arcs.data(pie(data)).transition().duration(2000).attr('d', arc)

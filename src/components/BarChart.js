@@ -1,9 +1,8 @@
 import useD3 from '../hooks/useD3'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import * as d3 from 'd3'
 
 function BarChart({ data, selectedChart }) {
-	const [initialised, setInitialised] = useState(false)
 	// De afmetingen van de gehele svg
 	const margin = { top: 40, bottom: 10, left: 120, right: 0 }
 	const width = 900 - margin.left - margin.right
@@ -15,19 +14,6 @@ function BarChart({ data, selectedChart }) {
 
 			const xaxis = d3.axisTop().scale(xscale) // X as zet ik hier aan de bovenkant van de grafiek
 			const yaxis = d3.axisLeft().scale(yscale) // data van de Y as zet ik hier aan de linkerkant van de grafiek
-
-			// Zet SVg op de juiste plek
-			if (!initialised) {
-				const g = svg
-					.select('g')
-					.attr('transform', `translate(${margin.left},${margin.top})`)
-					.attr('class', 'chart')
-
-				// Y en X as
-
-				const g_xaxis = g.append('g').attr('class', 'x axis')
-				const g_yaxis = g.append('g').attr('class', 'y axis')
-			}
 
 			// Deze functie zorgt ervoor dat er een pop up verschijnt wanneer je over een rectangle heen hovert
 			const onMouseMove = (d, data) => {
@@ -66,30 +52,18 @@ function BarChart({ data, selectedChart }) {
 			}
 
 			const vierkant = () => {
-				const color = d3.scaleOrdinal([
-					// kleuren van de virkanten
-					'#6B8E6E',
-					'#759D78',
-					'#82AC85',
-					'#A9C7AC',
-					'#BFD8C4',
-					'#D1ACA5',
-					'#D6B6AF',
-					'#DBBFB9',
-					'#E0C8C3',
-					'#E5D1CD',
-				])
-
 				const rect = svg
 					.select('.chart')
 					.selectAll('rect')
 					.data(data, d => d.name)
 					.join(enter => {
+						// console.log('bar', 'enter')
 						const rect_enter = enter
 							.append('rect')
 							.attr('x', 0)
 							.attr('fill', d => {
-								return color(d)
+								console.log('bar', d)
+								return d.color
 							}) // fill the rect
 						rect_enter.append('title')
 						return rect_enter
@@ -135,9 +109,6 @@ function BarChart({ data, selectedChart }) {
 		},
 		[data.length, selectedChart]
 	)
-	useEffect(() => {
-		setInitialised(true)
-	}, [])
 
 	return (
 		<svg
@@ -149,9 +120,14 @@ function BarChart({ data, selectedChart }) {
 				marginLeft: '0px',
 			}}
 		>
+			<g
+				className="chart"
+				style={{ transform: `translate(${margin.left}px,${margin.top}px)` }}
+			>
+				<g className="x axis" />
+				<g className="y axis" />
+			</g>
 			<g className="plot-area" />
-			<g className="x-axis" />
-			<g className="y-axis" />
 		</svg>
 	)
 }

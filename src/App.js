@@ -3,6 +3,18 @@ import { useEffect, useState } from 'react'
 import dataOphalen from './components/fetch.js'
 import BarChart from './components/BarChart.js'
 import PieChart from './components/PieChart.js'
+const COLORS = [
+	'#6B8E6E',
+	'#759D78',
+	'#82AC85',
+	'#A9C7AC',
+	'#BFD8C4',
+	'#D1ACA5',
+	'#D6B6AF',
+	'#DBBFB9',
+	'#E0C8C3',
+	'#E5D1CD',
+]
 
 function App() {
 	const [json, setJson] = useState(null)
@@ -11,8 +23,14 @@ function App() {
 		setselectedChart(e.currentTarget.value)
 	}
 	useEffect(() => {
-		dataOphalen().then(data => setJson(data))
-	})
+		dataOphalen().then(data =>
+			setJson(
+				data
+					.sort((a, b) => b.playcount - a.playcount)
+					.map((d, i) => ({ ...d, color: COLORS[i % COLORS.length] }))
+			)
+		)
+	}, [])
 
 	return (
 		<div className="App">
@@ -64,9 +82,9 @@ function App() {
 				<div className="barchart">
 					{json ? <BarChart selectedChart={selectedChart} data={json} /> : undefined}
 				</div>
-				<div className="hidden" id="tooltip">
-					<p id="name"></p>
-					<p id="value"></p>
+				<div className="hidden2" id="tooltip2">
+					<p id="name2"></p>
+					<p id="value2"></p>
 				</div>
 				{json ? <PieChart selectedChart={selectedChart} data={json} /> : undefined}
 			</div>
